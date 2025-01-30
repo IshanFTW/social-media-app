@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = "https://social-media-app-production-c81e.up.railway.app/api";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -8,7 +8,7 @@ const api = axios.create({
 
 // Request interceptor to add auth token
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -16,16 +16,17 @@ api.interceptors.request.use((config) => {
 });
 
 export const auth = {
-  signup: (userData) => api.post('/users/signup', userData),
-  login: (credentials) => api.post('/users/login', credentials),
-  logout: () => api.post('/users/logout'),
+  signup: (userData) => api.post("/users/signup", userData),
+  login: (credentials) => api.post("/users/login", credentials),
+  logout: () => api.post("/users/logout"),
 };
 
 export const posts = {
-  create: (content) => api.post('/posts', { content }),
-  getAll: () => api.get('/posts'),
+  create: (content) => api.post("/posts", { content }),
+  getAll: () => api.get("/posts"),
   like: (postId) => api.post(`/posts/${postId}/like`),
-  comment: (postId, content) => api.post(`/posts/${postId}/comments`, { content }),
+  comment: (postId, content) =>
+    api.post(`/posts/${postId}/comments`, { content }),
 };
 
-export default api; 
+export default api;
